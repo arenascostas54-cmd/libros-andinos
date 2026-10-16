@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIBROS Andinos</title>
+    <style>
+        :root {
+            --primary-color: #78350f; /* Tono terroso/andino */
+            --secondary-color: #b45309;
+            --background-color: #fef3c7;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .upload-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .upload-section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .file-input-wrapper {
+            margin: 1.5rem 0;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            border: 2px dashed var(--secondary-color);
+            display: inline-block;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: #fffbeb;
+            color: var(--secondary-color);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-upload:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        button.upload-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button.upload-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .library-section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #d97706;
+            padding-bottom: 0.5rem;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .book-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            word-break: break-word;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .book-actions a {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .btn-read {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-read:hover {
+            background-color: #1d4ed8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #4b5563;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        #file-name-display {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>LIBROS Andinos</h1>
+        <p>Repositorio digital de lecturas, textos y saberes</p>
+    </header>
+
+    <main>
+        <!-- Sección para subir archivos -->
+        <section class="upload-section">
+            <h2>Subir Nuevo Libro (PDF)</h2>
+            <form id="upload-form">
+                <div class="file-input-wrapper">
+                    <label for="pdf-file" class="custom-file-upload">
+                        📁 Seleccionar Archivo PDF
+                    </label>
+                    <input type="file" id="pdf-file" accept=".pdf" required>
+                    <div id="file-name-display">Ningún archivo seleccionado</div>
+                </div>
+                <button type="submit" class="upload-btn">Subir a la Biblioteca</button>
+            </form>
+        </section>
+
+        <!-- Sección de biblioteca -->
+        <section class="library-section">
+            <h2>Biblioteca Disponible</h2>
+            <div id="book-grid" class="book-grid">
+                <!-- Los libros subidos aparecerán aquí dinámicamente -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 LIBROS Andinos. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('pdf-file');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const uploadForm = document.getElementById('upload-form');
+        const bookGrid = document.getElementById('book-grid');
+
+        // Mostrar el nombre del archivo seleccionado
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileNameDisplay.textContent = e.target.files[0].name;
+            } else {
+                fileNameDisplay.textContent = 'Ningún archivo seleccionado';
+            }
+        });
+
+        // Manejar la subida del PDF
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            // Creamos una URL temporal para el objeto PDF cargado
+            const fileURL = URL.createObjectURL(file);
+            const bookName = file.name.replace(/\.[^/.]+\$/, ""); // Quitar la extensión .pdf
+
+            addBookToUI(bookName, fileURL);
+
+            // Limpiar formulario
+            uploadForm.reset();
+            fileNameDisplay.textContent = 'Ningún archivo seleccionado';
+        });
+
+        function addBookToUI(title, url) {
+            const card = document.createElement('div');
+            card.className = 'book-card';
+
+            card.innerHTML = `
+                <div class="book-title">📖 ${title}</div>
+                <div class="book-actions">
+                    <a href="${url}" target="_blank" class="btn-read">Leer PDF</a>
+                </div>
+            `;
+
+            bookGrid.appendChild(card);
+        }
+    </script>
+</body>
+</html>
